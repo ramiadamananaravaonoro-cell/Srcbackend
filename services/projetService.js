@@ -89,6 +89,7 @@ export const getProjetsPublies = async () => {
     where: {
       statut: "publie",
     },
+    attributes: ["id_projet", "image_url", "statut"], // ✅ image_url explicite
     include: [
       {
         model: DemandeAide,

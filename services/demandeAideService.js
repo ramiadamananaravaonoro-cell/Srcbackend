@@ -3,7 +3,7 @@ import PieceJustificative from "../models/PieceJustificative.js";
 import User from "../models/User.js";
 import sequelize from "../config/database.js";
 import Projet from "../models/Projet.js";
-
+import { Op } from "sequelize";
 export const createDemande = async (data) => {
   return await DemandeAide.create(data);
 };
@@ -102,12 +102,19 @@ export const updateStatutDemande = async (id, data) => {
     });
 
     if (!exist) {
+      const imagePiece = await PieceJustificative.findOne({
+    where: {
+      id_demande: id,
+      type_fichier: { [Op.like]: "image/%" }, // ✅ première image trouvée
+    },
+  });
       await Projet.create({
         id_demande: id,
         titre: demande.titre,
         description_courte: demande.description_situation,
         categorie: demande.categorie,
         statut: "depublie", // 🔥 important
+        image_url: imagePiece ? imagePiece.fichier_url : null, // ✅ image transmise
       });
     }
   }

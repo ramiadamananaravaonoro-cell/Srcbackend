@@ -133,6 +133,7 @@ export const getPublishedProjects = async (req, res) => {
         goal: p.demande?.montant_objectif || 0,
         donors: uniqueDonors.size, // 🔥 FIX
         beneficiaryId: p.demande.id_beneficiaire, // 🔥 IMPORTANT 
+        image: p.image_url || null,
       };
     });
     console.log(formatted)
