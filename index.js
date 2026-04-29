@@ -17,7 +17,9 @@ dotenv.config();
 initAssociations();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://srcfrontend.vercel.app'
+}));
 app.use(express.json());
 
 // Routes
